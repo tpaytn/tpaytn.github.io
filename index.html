@@ -5,12 +5,33 @@
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
   </head>
-  <body id="react-app">
+  <body>
+    <div id="react-app"></div>
+    <script type="text/babel">
+      const state = {
+        buttonState: {
+          style: { color: 'red' },
+          onClick: () => console.log('clicked'),
+          title: 'Click me!'
+        }
+      };
+
+      const ColoredButton = (props) => (
+        <button style={props.style} onClick={props.onClick}>
+          {props.title}
+        </button>
+      );
+
+      const Main = (props) => (
+        <div>
+          {ColoredButton(props.buttonState)}
+        </div>
+      );
+      
+      ReactDOM.render(Main(state), document.getElementById('react-app'));
+
+    </script>
   </body>
-  <script type="text/babel">
-    const getObj = () => ({a:1, b:2});
-    console.log(Object.values(getObj()));
-  </script>
 </html>
