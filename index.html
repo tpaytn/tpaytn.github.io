@@ -35,14 +35,11 @@
 
       // ----------------------------------------------------------------------
       // Components 
-      const ColoredButton = (props) => {
-        console.log(props)
-        return (
-          <button style={{ color: props.color }} onClick={props.onClick}>
-            "Click me!"
-          </button>
-        );
-      };
+      const ColoredButton = (props) => (
+        <button style={{ color: props.color }} onClick={props.onClick}>
+          "Click me!"
+        </button>
+      );
 
       const Main = (props) => (
         <div>
@@ -51,7 +48,7 @@
       );
 
       // ----------------------------------------------------------------------
-      // Rendering view
+      // Render the view
       const renderMain = () => ReactDOM.render(
         Main(state),
         document.getElementById('react-app')
