@@ -2,10 +2,21 @@
 <html>
   <head>
     <title>Trent's Github Webpage</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no" />
+    <meta name="HandheldFriendly"
+          content="true" />
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <script src="libs/object-path-master/index.js"></script>
   </head>
   <body style="
     position: relative;
@@ -19,13 +30,18 @@
 
       // ----------------------------------------------------------------------
       // State and state handling
-      const state = {};
+      const state = { viewportWidth: document.documentElement.clientWidth };
 
       // Impure function: state is mutated and outside of function scope
       const update = (path, value) => {
         objectPath.set(state, path, value);
         renderMain();
       }
+
+      const updateViewportWidth = () =>
+        update("viewportWidth", document.documentElement.clientWidth);
+
+      window.addEventListener("resize", updateViewportWidth)
 
       // ----------------------------------------------------------------------
       // Components
@@ -35,7 +51,7 @@
             display: "inline-block",
             backgroundColor: "transparent",
             color: "white",
-            padding: "15px 25px",
+            padding: "15px 18px",
             border: "2px solid white",
             borderRadius: "15px",
             textAlign: "center",
@@ -49,14 +65,19 @@
 
       const Navbar = (props) => (
         <div style={{ height: "3em", width: "100%", backgroundColor: "#666666" }}>
-          <h2 style={{ margin: "0", padding: "12px 0 0 10px", color: "#EEEEEE" }}>Trent Payton</h2>
+          <h2 style={{ margin: "0", padding: "12px 0 0 30px", color: "#EEEEEE" }}>Trent Payton</h2>
         </div>
+      );
+
+      const Footer = (props) => (
+        <div style={{ height: "3em", width: "100%", backgroundColor: "#666666" }}>
+        </div>        
       );
 
       const Main = (props) => (
         <div style={{}}>
           <Navbar />
-          <div style={{ paddingTop: "30%"}}>
+          <div style={{ paddingLeft: "30px", paddingTop: "200px"}}>
             <Button />
           </div>
         </div>
