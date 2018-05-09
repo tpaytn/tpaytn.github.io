@@ -6,20 +6,26 @@
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <script src="../libs/object-path-master/index.js"></script>
   </head>
-  <body style="
-    position: relative;
-    margin: 0;
-    font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    font-size: 1.1rem;
-    background-color: #00BFF3;
-  ">
+  <body>
     <div id="react-app"></div>
     <script type="text/babel">
 
       // ----------------------------------------------------------------------
       // State and state handling
-      const state = {};
+      const toggleButtonColor = () => (
+        state.buttonState.color === "red" ?
+          update("buttonState.color", "green")
+          : update("buttonState.color", "red")
+      );
+
+      const state = {
+        buttonState: {
+          color: "green",
+          onClick: toggleButtonColor
+        }
+      };
 
       // Impure function: state is mutated and outside of function scope
       const update = (path, value) => {
@@ -28,37 +34,16 @@
       }
 
       // ----------------------------------------------------------------------
-      // Components
-      const Button = (props) => (
-        <a href="FlowQuiz/index.html">
-          <button style={{
-            display: "inline-block",
-            backgroundColor: "transparent",
-            color: "white",
-            padding: "15px 25px",
-            border: "2px solid white",
-            borderRadius: "15px",
-            textAlign: "center",
-            fontSize: "0.9em",
-            textTransform: "uppercase",
-          }}>
-            Launch FlowQuiz
-          </button>
-        </a>
-      );
-
-      const Navbar = (props) => (
-        <div style={{ height: "3em", width: "100%", backgroundColor: "#666666" }}>
-          <h2 style={{ margin: "0", padding: "12px 0 0 10px", color: "#EEEEEE" }}>Trent Payton</h2>
-        </div>
+      // Components 
+      const ColoredButton = (props) => (
+        <button style={{ color: props.color }} onClick={props.onClick}>
+          "Click me!"
+        </button>
       );
 
       const Main = (props) => (
-        <div style={{}}>
-          <Navbar />
-          <div style={{ paddingTop: "30%"}}>
-            <Button />
-          </div>
+        <div>
+          {ColoredButton(props.buttonState)}
         </div>
       );
 
@@ -69,7 +54,7 @@
         document.getElementById('react-app')
       );
 
-      // Inital render:
+      // inital render:
       renderMain();
 
     </script>
