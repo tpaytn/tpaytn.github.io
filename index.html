@@ -20,6 +20,7 @@
   </head>
   <body style="
     position: relative;
+    height: 1000px;
     margin: 0;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
     font-size: 1.1rem;
@@ -63,15 +64,56 @@
         </a>
       );
 
+      const Header = (props) => (
+        <h2 style={{ margin: "0", color: "#FFFFFF" }}>{props.children}</h2>
+      );
+
       const Navbar = (props) => (
-        <div style={{ height: "3em", width: "100%", backgroundColor: "#666666" }}>
-          <h2 style={{ margin: "0", padding: "12px 0 0 30px", color: "#EEEEEE" }}>Trent Payton</h2>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          height: "3em",
+          width: "100%",
+          paddingLeft: "30px",
+          backgroundColor: "#999999"
+        }}>
+          <Header>Trent Payton</Header>
         </div>
       );
 
       const Footer = (props) => (
-        <div style={{ height: "3em", width: "100%", backgroundColor: "#666666" }}>
-        </div>        
+        <div style={{
+          position: "absolute",
+          bottom: "0",
+          height: "250px",
+          width: "100%",
+          backgroundColor: "#666666"
+        }}>
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "10px 30px",
+          }}>
+            <div style={{
+              display: "flex",
+              flexDirection: "column"
+            }}>
+              <Header>About</Header>
+              <div style={{ display: "flex", flexDirection: "row", width: "300px" }}>
+                <img
+                  src="tpayton_profile.jpg"
+                  width="100px"
+                  height="100px"
+                  style={{ flexShrink: "0", borderRadius: "50%" }}
+                />
+                <p>Trent is a front-end web developer, living in Vancouver, BC.</p>
+              </div>
+            </div>
+            <div>
+              <Header>Contact</Header>
+            </div>
+          </div>
+        </div>
       );
 
       const Main = (props) => (
@@ -80,6 +122,7 @@
           <div style={{ paddingLeft: "30px", paddingTop: "200px"}}>
             <Button />
           </div>
+          <Footer />
         </div>
       );
 
