@@ -17,11 +17,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
     <script src="libs/object-path-master/index.js"></script>
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+      integrity="sha256-gvEnj2axkqIj4wbYhPjbWV7zttgpzBVEgHub9AAZQD4=" crossorigin="anonymous" /-->
   </head>
   <body style="
     position: relative;
-    height: 1000px;
     margin: 0;
+    padding: 0;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
     font-size: 1.1rem;
     background-color: #00BFF3;
@@ -65,7 +67,7 @@
       );
 
       const Header = (props) => (
-        <h2 style={{ margin: "0", color: "#FFFFFF" }}>{props.children}</h2>
+        <h2 style={{ color: "#FFFFFF" }}>{props.children}</h2>
       );
 
       const Navbar = (props) => (
@@ -73,7 +75,6 @@
           display: "flex",
           alignItems: "center",
           height: "3em",
-          width: "100%",
           paddingLeft: "30px",
           backgroundColor: "#999999"
         }}>
@@ -81,45 +82,82 @@
         </div>
       );
 
+      const About = (props) => (
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          margin: "0 30px 30px 0",
+        }}>
+          <Header>About</Header>
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}>
+            <img
+              src="tpayton_profile.jpg"
+              width="100px"
+              height="100px"
+              style={{ flexShrink: "0", borderRadius: "50%" }}
+            ></img>
+            <p style={{
+              lineHeight: "1.4em",
+              fontSize: "0.80em",
+              color: "#DDDDDD", 
+              margin: "0 0 0 20px",
+              width: "200px",
+            }}>Trent is a web developer living in Vancouver, BC.  He is self-taught and specializes in front-end web and app development with React and React Native.
+            </p>
+          </div>
+        </div>
+      );
+
+      const Contact = (props) => (
+        <div style={{
+          display: "flex",
+          flexDirection: "column"
+        }}>
+          <Header>Contact</Header>
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}>
+            <p style={{
+              lineHeight: "1.4em",
+              fontSize: "0.80em",
+              color: "#DDDDDD",
+              margin: "0",
+              width: "320px",
+            }}>Contact me via email or checkout my LinkedIn page.  The site you are on right now is hosted by github, checkout my code there now!
+            </p>
+          </div>
+        </div>
+      );
+
       const Footer = (props) => (
         <div style={{
-          position: "absolute",
-          bottom: "0",
-          height: "250px",
+          flex: "1",
+          height: "auto",
           width: "100%",
           backgroundColor: "#666666"
         }}>
           <div style={{
             display: "flex",
             justifyContent: "space-between",
+            flexWrap: "wrap",
             margin: "10px 30px",
           }}>
-            <div style={{
-              display: "flex",
-              flexDirection: "column"
-            }}>
-              <Header>About</Header>
-              <div style={{ display: "flex", flexDirection: "row", width: "300px" }}>
-                <img
-                  src="tpayton_profile.jpg"
-                  width="100px"
-                  height="100px"
-                  style={{ flexShrink: "0", borderRadius: "50%" }}
-                />
-                <p>Trent is a front-end web developer, living in Vancouver, BC.</p>
-              </div>
-            </div>
-            <div>
-              <Header>Contact</Header>
-            </div>
+            <About />
+            <Contact />
           </div>
         </div>
       );
 
       const Main = (props) => (
-        <div style={{}}>
+        <div style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <Navbar />
-          <div style={{ paddingLeft: "30px", paddingTop: "200px"}}>
+          <div style={{ flex: "2", paddingLeft: "30px" }}>
             <Button />
           </div>
           <Footer />
