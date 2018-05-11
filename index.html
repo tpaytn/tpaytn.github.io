@@ -53,9 +53,9 @@
           <button style={{
             display: "inline-block",
             backgroundColor: "transparent",
-            color: "white",
+            color: "#FFFFFF",
             padding: "15px 18px",
-            border: "2px solid white",
+            border: "2px solid #FFFFFF",
             borderRadius: "15px",
             textAlign: "center",
             fontSize: "0.9em",
@@ -67,18 +67,20 @@
       );
 
       const Header = (props) => (
-        <h2 style={{ color: "#FFFFFF" }}>{props.children}</h2>
+        <h2 style={{ color: "#FFFFFF", margin: "10px 0" }}>{props.children}</h2>
       );
 
       const Navbar = (props) => (
         <div style={{
           display: "flex",
+          flexDirection: "row",
           alignItems: "center",
-          height: "3em",
+          height: "50px",
+          width: "auto",
+          backgroundColor: "#999999",
           paddingLeft: "30px",
-          backgroundColor: "#999999"
         }}>
-          <Header>Trent Payton</Header>
+          <h2 style={{ color: "#FFFFFF", textShadow: "1px 1px #000000" }}>Trent Payton</h2>
         </div>
       );
 
@@ -86,7 +88,7 @@
         <div style={{
           display: "flex",
           flexDirection: "column",
-          margin: "0 30px 30px 0",
+          margin: "0 30px 20px 0",
         }}>
           <Header>About</Header>
           <div style={{
@@ -115,7 +117,8 @@
       const Contact = (props) => (
         <div style={{
           display: "flex",
-          flexDirection: "column"
+          flexDirection: "column",
+          marginBottom: "50px",
         }}>
           <Header>Contact</Header>
           <div style={{
@@ -137,16 +140,15 @@
 
       const Footer = (props) => (
         <div style={{
-          flex: "1",
-          height: "auto",
           width: "100%",
+          height: "320px",
           backgroundColor: "#666666"
         }}>
           <div style={{
             display: "flex",
             justifyContent: "space-between",
             flexWrap: "wrap",
-            margin: "10px 30px",
+            margin: "0 30px",
           }}>
             <About />
             <Contact />
@@ -155,12 +157,20 @@
       );
 
       const Main = (props) => (
-        <div style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <div>
           <Navbar />
-          <div style={{ flex: "2", paddingLeft: "30px" }}>
+          <div style={{ height: "300px", width: "220px", paddingTop: "125px", paddingLeft: "30px" }}>
+            <h1 style={{ margin: "0" }}>FlowQuiz!</h1>
+            <p style={{ color: "#444444"}}>Find out what Marvel{"\u2122"} Superhero you are in this flowchart quiz app.</p>
             <Button />
           </div>
-          <Footer />
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}>
+            <Footer />
+          </div>
         </div>
       );
 
