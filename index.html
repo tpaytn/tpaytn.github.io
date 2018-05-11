@@ -26,7 +26,7 @@
     padding: 0;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
     font-size: 1.1rem;
-    background-color: #00BFF3;
+    background-color: #666666;
   ">
     <div id="react-app"></div>
     <script type="text/babel">
@@ -70,10 +70,40 @@
         <h2 style={{ color: "#FFFFFF", margin: "10px 0" }}>{props.children}</h2>
       );
 
+      const EmailIcon = (props) => (
+        <a href="mailto:trentpayton@gmail.com">
+          <img height="32" width="32" src="images/email.png"></img>
+        </a>
+      );
+
+      const LinkedinIcon = (props) => (
+        <a href="https://www.linkedin.com/in/trent-payton-06730015" target="_blank">
+          <img height="32" width="32" src="images/linkedin_48.png"></img>
+        </a>
+      );
+
+      const GithubIcon = (props) => (
+        <a href="https://github.com/tpaytn/tpaytn.github.io" target="_blank">
+          <svg height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z">
+            </path>
+          </svg>
+        </a>
+      );
+
+      const ContactIcons = (props) => (
+        <div style={{ height: "32px", width: "110px", display: "flex", justifyContent: "space-between", paddingRight: "30px" }}>
+          <EmailIcon />
+          <LinkedinIcon />
+          <GithubIcon />
+        </div>
+      );
+
       const Navbar = (props) => (
         <div style={{
           display: "flex",
           flexDirection: "row",
+          justifyContent: "space-between",
           alignItems: "center",
           height: "50px",
           width: "auto",
@@ -81,6 +111,7 @@
           paddingLeft: "30px",
         }}>
           <h2 style={{ color: "#FFFFFF" }}>Trent Payton</h2>
+          <ContactIcons />
         </div>
       );
 
@@ -97,7 +128,7 @@
             justifyContent: "space-between",
           }}>
             <img
-              src="tpayton_profile.jpg"
+              src="images/tpayton_profile.jpg"
               width="100px"
               height="100px"
               style={{ flexShrink: "0", borderRadius: "50%" }}
@@ -108,7 +139,7 @@
               color: "#DDDDDD", 
               margin: "0 0 0 20px",
               width: "200px",
-            }}>Trent is a web developer living in Vancouver, BC.  He is self-taught and specializes in front-end web and app development with React and React Native.
+            }}>Trent is a web developer living in Vancouver BC.  He is self-taught and specializes in front-end web and app development with React and React Native.
             </p>
           </div>
         </div>
@@ -118,13 +149,14 @@
         <div style={{
           display: "flex",
           flexDirection: "column",
-          marginBottom: "50px",
+          marginBottom: "30px",
         }}>
           <Header>Contact</Header>
           <div style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
+            marginBottom: "10px",
           }}>
             <p style={{
               lineHeight: "1.4em",
@@ -132,17 +164,17 @@
               color: "#DDDDDD",
               margin: "0",
               width: "320px",
-            }}>Contact me via email or checkout my LinkedIn page.  The site you are on right now is hosted by github, checkout my code there now!
+            }}>Get in touch by email or LinkedIn.  Want to see Trent's work?  Checkout the code for FlowQuiz (and the page you're on) on Github!
             </p>
           </div>
+          <ContactIcons />
         </div>
       );
 
       const Footer = (props) => (
         <div style={{
           width: "100%",
-          height: "320px",
-          backgroundColor: "#666666"
+          height: "auto",
         }}>
           <div style={{
             display: "flex",
@@ -159,9 +191,9 @@
       const Main = (props) => (
         <div>
           <Navbar />
-          <div style={{ height: "300px", width: "220px", paddingTop: "125px", paddingLeft: "30px" }}>
+          <div style={{ height: "300px", width: "auto", paddingTop: "125px", paddingLeft: "30px", backgroundColor: "#00BFF3" }}>
             <h1 style={{ margin: "0" }}>FlowQuiz!</h1>
-            <p style={{ color: "#444444"}}>Find out what Marvel{"\u2122"} Superhero you are in this flowchart quiz app.</p>
+            <p style={{ color: "#444444", width: "220px" }}>Find out what Marvel{"\u2122"} Superhero you are in this flowchart quiz app.</p>
             <Button />
           </div>
           <div style={{
