@@ -17,8 +17,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
     <script src="libs/object-path-master/index.js"></script>
-    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
-      integrity="sha256-gvEnj2axkqIj4wbYhPjbWV7zttgpzBVEgHub9AAZQD4=" crossorigin="anonymous" /-->
   </head>
   <body style="
     position: relative;
@@ -30,22 +28,6 @@
   ">
     <div id="react-app"></div>
     <script type="text/babel">
-
-      // ----------------------------------------------------------------------
-      // State and state handling
-      const state = { viewportWidth: document.documentElement.clientWidth };
-
-      // Impure function: state is mutated and outside of function scope
-      const update = (path, value) => {
-        objectPath.set(state, path, value);
-        renderMain();
-      }
-
-      const updateViewportWidth = () =>
-        update("viewportWidth", document.documentElement.clientWidth);
-
-      window.addEventListener("resize", updateViewportWidth)
-
       // ----------------------------------------------------------------------
       // Components
       const Button = (props) => (
@@ -208,13 +190,7 @@
 
       // ----------------------------------------------------------------------
       // Render the view
-      const renderMain = () => ReactDOM.render(
-        Main(state),
-        document.getElementById('react-app')
-      );
-
-      // Inital render:
-      renderMain();
+      ReactDOM.render(Main(), document.getElementById('react-app'));
 
     </script>
   </body>

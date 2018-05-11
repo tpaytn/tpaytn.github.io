@@ -45,6 +45,11 @@
         renderMain();
       }
 
+      const updateViewportWidth = () =>
+        update("viewportWidth", document.documentElement.clientWidth);
+
+      window.addEventListener("resize", updateViewportWidth)
+
       // ----------------------------------------------------------------------
       // Components 
       const ColoredButton = (props) => (
