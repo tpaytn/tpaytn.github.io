@@ -36,24 +36,6 @@
 
       // ----------------------------------------------------------------------
       // Components
-      const Button = (props) => (
-        <a href="FlowQuiz/index.html">
-          <button style={{
-            display: "inline-block",
-            backgroundColor: "transparent",
-            color: "#FFFFFF",
-            padding: "15px 18px",
-            border: "2px solid #FFFFFF",
-            borderRadius: "15px",
-            textAlign: "center",
-            fontSize: "0.9em",
-            textTransform: "uppercase",
-          }}>
-            Launch FlowQuiz
-          </button>
-        </a>
-      );
-
       const Header = (props) => (
         <h2 style={{ color: "#FFFFFF", margin: "10px 0" }}>{props.children}</h2>
       );
@@ -81,27 +63,34 @@
         </a>
       );
 
+      const Button = (props) => (
+        <a href="FlowQuiz/index.html">
+          <button style={{
+            display: "inline-block",
+            backgroundColor: "transparent",
+            color: "#FFFFFF",
+            padding: "15px 18px",
+            border: "2px solid #FFFFFF",
+            borderRadius: "15px",
+            textAlign: "center",
+            fontSize: "0.9em",
+            textTransform: "uppercase",
+          }}>
+            Launch FlowQuiz
+          </button>
+        </a>
+      );
+
       const ContactIcons = (props) => (
-        <div style={{ height: "32px", width: "110px", display: "flex", justifyContent: "space-between" }}>
+        <div style={{
+          height: "32px",
+          width: "110px",
+          display: "flex",
+          justifyContent: "space-between"
+        }}>
           <EmailIcon />
           <LinkedinIcon />
           <GithubIcon />
-        </div>
-      );
-
-      const Navbar = (props) => (
-        <div style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          height: "50px",
-          width: "auto",
-          backgroundColor: "#999999",
-          padding: "0 " + styles.wPadding,
-        }}>
-          <h2 style={{ color: "#FFFFFF" }}>Trent Payton</h2>
-          <ContactIcons />
         </div>
       );
 
@@ -119,8 +108,8 @@
           }}>
             <img
               src="images/tpayton_profile.jpg"
-              width="100px"
-              height="100px"
+              width="80px"
+              height="80px"
               style={{ flexShrink: "0", borderRadius: "50%" }}
             ></img>
             <p style={{
@@ -153,7 +142,7 @@
               fontSize: "0.80em",
               color: "#DDDDDD",
               margin: "0",
-              width: "320px",
+              width: "300px",
             }}>Get in touch by email or LinkedIn.  Want to see Trent's work?  Checkout the code for FlowQuiz (and the page you're on) on Github!
             </p>
           </div>
@@ -161,38 +150,55 @@
         </div>
       );
 
+      const Navbar = (props) => (
+        <div style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: "50px",
+          width: "auto",
+          backgroundColor: "#999999",
+          padding: "0 " + styles.wPadding,
+        }}>
+          <h2 style={{ color: "#FFFFFF" }}>Trent Payton</h2>
+          <ContactIcons />
+        </div>
+      );
+
+      const FlowQuizBody = (props) => (
+        <div style={{
+          height: "300px",
+          width: "auto",
+          paddingTop: "125px",
+          paddingLeft: styles.wPadding,
+          backgroundColor: "#00BFF3"
+        }}>
+          <h1 style={{ margin: "0" }}>FlowQuiz!</h1>
+          <p style={{ color: "#444444", width: "220px" }}>
+            Find out what Marvel{"\u2122"} Superhero you are in this flowchart quiz app.
+          </p>
+          <Button />
+        </div>
+      );
+
       const Footer = (props) => (
         <div style={{
-          width: "100%",
-          height: "auto",
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          margin: "0 " + styles.wPadding,
         }}>
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            margin: "0 " + styles.wPadding,
-          }}>
-            <About />
-            <Contact />
-          </div>
+          <About />
+          <Contact />
         </div>
       );
 
       const Main = (props) => (
         <div>
           <Navbar />
-          <div style={{ height: "300px", width: "auto", paddingTop: "125px", paddingLeft: styles.wPadding, backgroundColor: "#00BFF3" }}>
-            <h1 style={{ margin: "0" }}>FlowQuiz!</h1>
-            <p style={{ color: "#444444", width: "220px" }}>Find out what Marvel{"\u2122"} Superhero you are in this flowchart quiz app.</p>
-            <Button />
-          </div>
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}>
-            <Footer />
-          </div>
+          <FlowQuizBody />
+          <Footer />
         </div>
       );
 
