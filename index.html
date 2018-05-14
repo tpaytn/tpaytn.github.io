@@ -32,6 +32,7 @@
       // Styles
       const styles = {
         wPadding: "3vw",
+        maxWidth: "1100px",
       };
 
       // ----------------------------------------------------------------------
@@ -152,17 +153,21 @@
 
       const Navbar = (props) => (
         <div style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          height: "50px",
-          width: "auto",
           backgroundColor: "#999999",
-          padding: "0 " + styles.wPadding,
         }}>
-          <h2 style={{ color: "#FFFFFF" }}>Trent Payton</h2>
-          <ContactIcons />
+          <div style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            boxSizing: "border-box",
+            height: "50px",
+            maxWidth: styles.maxWidth,
+            padding: "0 " + styles.wPadding,
+          }}>
+            <h2 style={{ color: "#FFFFFF" }}>Trent Payton</h2>
+            <ContactIcons />
+          </div>
         </div>
       );
 
@@ -187,7 +192,9 @@
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
-          margin: "0 " + styles.wPadding,
+          boxSizing: "border-box",
+          maxWidth: styles.maxWidth,
+          padding: "0 " + styles.wPadding,
         }}>
           <About />
           <Contact />
