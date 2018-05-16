@@ -17,26 +17,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
     <script src="../libs/object-path-master/index.js"></script>
+    <script src="js/marvelNodes.js"></script>
     <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
       integrity="sha256-gvEnj2axkqIj4wbYhPjbWV7zttgpzBVEgHub9AAZQD4=" crossorigin="anonymous" /-->
   </head>
-  <body>
+  <body style="
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    font-size: 1.1rem;
+    background-color: #999999;
+  ">
     <div id="react-app"></div>
     <script type="text/babel">
 
       // ----------------------------------------------------------------------
       // State and state handling
-      const toggleButtonColor = () => (
-        state.buttonState.color === "red" ?
-          update("buttonState.color", "green")
-          : update("buttonState.color", "red")
-      );
 
       const state = {
-        buttonState: {
-          color: "green",
-          onClick: toggleButtonColor
-        }
+        choices: []
       };
 
       // Impure function: state is mutated and outside of function scope
@@ -51,16 +51,10 @@
       window.addEventListener("resize", updateViewportWidth)
 
       // ----------------------------------------------------------------------
-      // Components 
-      const ColoredButton = (props) => (
-        <button style={{ color: props.color }} onClick={props.onClick}>
-          "Click me!"
-        </button>
-      );
-
+      // Components
       const Main = (props) => (
-        <div>
-          {ColoredButton(props.buttonState)}
+        <div style={{ padding: "10px" }}>
+          Work is in progress, please check back later.
         </div>
       );
 
@@ -73,6 +67,45 @@
 
       // Inital render:
       renderMain();
+
+      // ----------------------------------------------------------------------
+      // Making choices in the flowquiz:
+      const addChoice = (choice) => {
+        const newChoices = state.choices.concat(choice);
+        update('choices', newChoices);
+      };
+
+      const removeChoice = () => {
+        const newChoices = state.choices.slice(0, -1);
+        update('choices', newChoices);
+      };
+
+      const retrieveChosenNodes = (() => {
+        // Functions for retrieving node data based on user choices
+        const getNextNode = (nodes, node, choice) => {
+          const n = nodes[node];
+          // failure: nextNode is falsy
+          return n.type === 'question' && n.choices[choice].nextNode;
+        };
+
+        const getChosenNodeIDs = (nodes, choices) => (
+          choices.reduce((IDlist, e) => {
+            const nextNode = getNextNode(nodes, IDlist[IDlist.length -1], e);
+            // protect against some invalid choices
+            if (nextNode === false) {
+              return IDlist
+            }
+            return IDlist.concat(nextNode);
+          }, [1])
+        );
+
+        return (nodes, choices) => {
+          const ids = getChosenNodeIDs(nodes, choices);
+          return ids.map((e) => nodes[e]);
+        };
+      })();
+
+      const getChosenNodes = () => retrieveChosenNodes(marvelNodes, state.choices);
 
     </script>
   </body>
