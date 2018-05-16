@@ -32,10 +32,10 @@ const marvelNodes = {
     choices: [
       {
         text: "The X-Men",
-        nextNode: 4
+        nextNode: 5
       }, {
         text: "The Incredibles",
-        nextNode: 5
+        nextNode: 6
       }
     ]
   },
