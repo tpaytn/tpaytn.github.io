@@ -54,10 +54,10 @@ const marvelNodes = {
     text: "Say you spot $100 on the ground.  What do you do?",
     choices: [
       {
-        text: "Might as well spend it.",
+        text: "Might as well spend it",
         nextNode: 7
       }, {
-        text: "Try to find its owner at any cost.  Haha, 'cost.'",
+        text: "Try to find its owner at any cost.  Haha, 'cost'",
         nextNode: 11
       }
     ]
@@ -70,10 +70,10 @@ const marvelNodes = {
         text: "I'm up for some shawarma.  How much would one of those cost?  $50?",
         nextNode: 8
       }, {
-        text: "Something charitable.",
+        text: "Something charitable",
         nextNode: 9
       }, {
-        text: "That's none of your business.",
+        text: "That's none of your business",
         nextNode: 10
       }
     ]
@@ -232,7 +232,7 @@ const marvelNodes = {
         text: "Just let me punch something, anything",
         nextNode: 27
       }, {
-        text: "Spa day, especially if it means some peace and quiet.",
+        text: "Spa day, especially if it means some peace and quiet",
         nextNode: 28
       }
     ]
