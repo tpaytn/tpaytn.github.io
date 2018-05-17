@@ -29,16 +29,21 @@
     background: #ad0fad; /* Old browsers */
     background: linear-gradient(135deg, #ff992d 20%,#ad0fad 80%);
     font-family: 'Helvetica Neue', Helvetica, sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
   ">
     <div id="react-app"></div>
     <script type="text/babel">
 
       // ----------------------------------------------------------------------
+      // Helper functions
+      const assign = Object.assign.bind({});
+
+      // ----------------------------------------------------------------------
       // State and state handling
 
       const state = {
-        choices: []
+        marvelNodes,
+        choices: [],
       };
 
       // Impure function: state is mutated and outside of function scope
@@ -54,17 +59,13 @@
 
       // ----------------------------------------------------------------------
       // Making choices in the flowquiz:
-      const addChoice = (choice) => {
-        const newChoices = state.choices.concat(choice);
-        update('choices', newChoices);
-      };
+      const makeChoiceUpdater = (action) =>
+        (choice) => update('choices', action(choice));
 
-      const removeChoice = () => {
-        const newChoices = state.choices.slice(0, -1);
-        update('choices', newChoices);
-      };
+      const addChoice = makeChoiceUpdater((choice) => state.choices.concat(choice));
+      const removeChoice = makeChoiceUpdater(() => state.choices.slice(0, -1));
 
-      const retrieveChosenNodes = (() => {
+      const getChosenNodes = (() => {
         // Functions for retrieving node data based on user choices
         const getNextNode = (nodes, node, choice) => {
           const n = nodes[node];
@@ -88,8 +89,6 @@
           return ids.map((e) => nodes[e]);
         };
       })();
-
-      const getChosenNodes = () => retrieveChosenNodes(marvelNodes, state.choices);
 
       // ----------------------------------------------------------------------
       // Components
@@ -120,11 +119,14 @@
         return;
       };
 
-      const Main = (props) => (
-        <div style={{ display: "flex", flexDirection: "column", padding: "10px" }}>
-          {getChosenNodes().map(getPanel)}
-        </div>
-      );
+      const Main = (props) => {
+        const chosenNodes = getChosenNodes(props.marvelNodes, props.choices);
+        return (
+          <div style={{ display: "flex", flexDirection: "column", padding: "10px" }}>
+            {chosenNodes.map(getPanel)}
+          </div>
+        );
+      };
 
       // ----------------------------------------------------------------------
       // Render the view
