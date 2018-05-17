@@ -33,37 +33,15 @@
   ">
     <div id="react-app"></div>
     <script type="text/babel">
-
       // ----------------------------------------------------------------------
       // Helper functions
       const assign = Object.assign.bind({});
 
-      // ----------------------------------------------------------------------
-      // State and state handling
-
-      const state = {
-        marvelNodes,
-        choices: [],
-      };
-
-      // Impure function: state is mutated and outside of function scope
-      const update = (path, value) => {
-        objectPath.set(state, path, value);
-        renderMain();
-      }
-
-      const updateViewportWidth = () =>
-        update("viewportWidth", document.documentElement.clientWidth);
-
-      window.addEventListener("resize", updateViewportWidth)
 
       // ----------------------------------------------------------------------
       // Making choices in the flowquiz:
       const makeChoiceUpdater = (action) =>
         (choice) => update('choices', action(choice));
-
-      const addChoice = makeChoiceUpdater((choice) => state.choices.concat(choice));
-      const removeChoice = makeChoiceUpdater(() => state.choices.slice(0, -1));
 
       const getChosenNodes = (() => {
         // Functions for retrieving node data based on user choices
@@ -89,6 +67,7 @@
           return ids.map((e) => nodes[e]);
         };
       })();
+
 
       // ----------------------------------------------------------------------
       // Components
@@ -127,6 +106,29 @@
           </div>
         );
       };
+
+
+      // ----------------------------------------------------------------------
+      // State and state handling
+
+      const state = {
+        marvelNodes,
+        choices: [],
+        addChoice: makeChoiceUpdater((choice) => state.choices.concat(choice)),
+        removeChoice: makeChoiceUpdater(() => state.choices.slice(0, -1))
+      };
+
+      // Impure function: state is mutated and outside of function scope
+      const update = (path, value) => {
+        objectPath.set(state, path, value);
+        renderMain();
+      }
+
+      const updateViewportWidth = () =>
+        update("viewportWidth", document.documentElement.clientWidth);
+
+      window.addEventListener("resize", updateViewportWidth)
+
 
       // ----------------------------------------------------------------------
       // Render the view
