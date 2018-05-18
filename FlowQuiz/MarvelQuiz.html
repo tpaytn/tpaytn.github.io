@@ -72,23 +72,46 @@
       // ----------------------------------------------------------------------
       // Components
       const Button = (props) => (
-        <button onClick={props.onClick} style={{
+        <button onClick={props.onClick} style={assign({
           display: "inline-block",
-          maxWidth: "180px",
-          backgroundColor: "transparent",
-          color: "#FFFFFF",
-          padding: "7px",
-          border: "2px solid #FFFFFF",
+          width: "105px",
+          height: "90px",
+          backgroundColor: "#EEEEEE",
+          color: "#000000",
+          padding: "4px",
+          border: "1px solid #AAAAAA",
           borderRadius: "15px",
           textAlign: "center",
           fontSize: "0.8em",
-        }}>
+        }, props.style)}>
           {props.children}
         </button>
       );
 
       const Header = (props) => (
-        <h1 style={{ margin: "0", fontSize: "1.1em" }}>{props.children}</h1>
+        <h1 style={assign({
+          margin: "0",
+          fontSize: "1.05em",
+          fontWeight: "300",
+          textAlign: "center",
+          color: "#FFFFFF",
+        }, props.style)}>
+          {props.children}
+        </h1>
+      );
+
+      const Panel = (props) => (
+        <div style={{
+          boxSizing: "border-box",
+          width: "340px",
+          padding: "15px",
+          marginBottom: "10px",
+          backgroundColor: "#666666",
+          border: "2px solid #FFFFFF",
+          borderRadius: "10px",
+        }}>
+          {props.children}
+        </div>
       );
 
       const Choice = (props) => (
@@ -96,19 +119,21 @@
       );
 
       const Question = (props) => (
-        <div>
-          <Header>{props.children}</Header>
-          {props.choices.map((e, index) =>
-            <Choice onClick={() => props.addChoice(index)}>{e.text}</Choice>
-          )}
-        </div>
+        <Panel>
+          <Header style={{ marginBottom: "15px" }}>{props.children}</Header>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            {props.choices.map((e, index) =>
+              <Choice onClick={() => props.addChoice(index)}>{e.text}</Choice>
+            )}
+          </div>
+        </Panel>
       );
 
       const Answer = (props) => (
-        <div>
+        <Panel>
           <h1>{props.title}</h1>
           <p>{props.text}</p>
-        </div>
+        </Panel>
       );
 
       const Main = (props) => {
