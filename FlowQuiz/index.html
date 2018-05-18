@@ -71,14 +71,36 @@
 
       // ----------------------------------------------------------------------
       // Components
+      const Button = (props) => (
+        <button onClick={props.onClick} style={{
+          display: "inline-block",
+          maxWidth: "180px",
+          backgroundColor: "transparent",
+          color: "#FFFFFF",
+          padding: "7px",
+          border: "2px solid #FFFFFF",
+          borderRadius: "15px",
+          textAlign: "center",
+          fontSize: "0.8em",
+        }}>
+          {props.children}
+        </button>
+      );
+
+      const Header = (props) => (
+        <h1 style={{ margin: "0", fontSize: "1.1em" }}>{props.children}</h1>
+      );
+
       const Choice = (props) => (
-        <p>{props.text}</p>
+        <Button onClick={props.onClick}>{props.children}</Button>
       );
 
       const Question = (props) => (
         <div>
-          <h1>{props.text}</h1>
-          {props.choices.map(Choice)}
+          <Header>{props.children}</Header>
+          {props.choices.map((e, index) =>
+            <Choice onClick={() => props.addChoice(index)}>{e.text}</Choice>
+          )}
         </div>
       );
 
@@ -89,17 +111,23 @@
         </div>
       );
 
-      const getPanel = (node) => {
-        if (node.type === "question") {
-          return Question(node);
-        } else if (node.type === "answer") {
-          return Answer(node);
-        }
-        return;
-      };
-
       const Main = (props) => {
+
+        const getPanel = (data) => {
+          if (data.type === "question") {
+            return (
+              <Question choices={data.choices} addChoice={props.addChoice}>
+                {data.text}
+              </Question>
+            );
+          } else if (data.type === "answer") {
+            return <Answer title={data.title} text={data.text} />;
+          }
+          return;
+        };
+
         const chosenNodes = getChosenNodes(props.marvelNodes, props.choices);
+
         return (
           <div style={{ display: "flex", flexDirection: "column", padding: "10px" }}>
             {chosenNodes.map(getPanel)}
