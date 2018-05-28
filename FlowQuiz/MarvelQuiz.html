@@ -73,6 +73,7 @@
         return (
           <button
             onClick={props.onClick}
+            disabled={props.disabled}
             style={merge({
               height: "40px",
               marginBottom: "8px",
@@ -114,15 +115,16 @@
         </div>
       );
 
-      // 3 states: selected, available, unnavailable
-      const Choice = (props) => (props.selected ?
-        <Button style={{
-          backgroundColor: "#D5F0F2",
-          borderColor: "#00F0FF",
-        }}>
+      const Choice = (props) => (props.clickable ?
+        <Button onClick={props.onClick}>{props.children}</Button>
+        :
+        <Button disabled style={
+          (props.chosen) ?
+            { backgroundColor: "#D5F0F2", borderColor: "#00F0FF" }
+            : { color: "#DDDDDD" }
+        }>
           {props.children}
         </Button>
-        : <Button onClick={props.onClick}>{props.children}</Button>
       );
 
       const Question = (props) => (
@@ -132,16 +134,15 @@
             display: "flex",
             flexDirection: "column",
           }}>
-            {props.choices.map((e, index) => (props.choice === index ?
-              <Choice selected>{e.text}</Choice>
-              :
+            {props.choices.map((e, index) =>
               <Choice
-                selected={false}
+                clickable={props.choice === undefined}
+                chosen={props.choice === index}
                 onClick={() => props.addChoice(index)}
               >
                 {e.text}
               </Choice>
-            ))}
+            )}
           </div>
         </Panel>
       );
