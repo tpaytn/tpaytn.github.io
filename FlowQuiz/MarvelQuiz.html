@@ -41,9 +41,6 @@
 
       // ----------------------------------------------------------------------
       // Making choices in the flowquiz:
-      const makeChoiceUpdater = (action) =>
-        (choice) => update("choices", action(choice));
-
       const getNextNode = (nodes, id, choice) => {
         const n = nodes[id];
         // failure: nextNode is falsy
@@ -94,23 +91,22 @@
       const Header = (props) => (
         <h1 style={merge({
           margin: "0 0 22px 0",
-          fontSize: "1em",
-          fontWeight: "300",
-          color: "#FFFFFF",
+          color: "#FF992D",
         }, props.style)}>
           {props.children}
         </h1>
       );
 
       const Panel = (props) => (
-        <div style={{
+        <div style={merge({
           boxSizing: "border-box",
           width: "300px",
           marginBottom: "10px",
           padding: "24px 20px 14px 20px",
           borderRadius: "6px",
+          color: "#FFFFFF",
           backgroundColor: "#666666",
-        }}>
+        }, props.style)}>
           {props.children}
         </div>
       );
@@ -129,7 +125,14 @@
 
       const Question = (props) => (
         <Panel>
-          <Header>{props.children}</Header>
+          <h1 style={{
+            margin: "0 0 22px 0",
+            fontSize: "1em",
+            fontWeight: "300",
+            color: "#FFFFFF",
+          }}>
+            {props.children}
+          </h1>
           <div style={{
             display: "flex",
             flexDirection: "column",
@@ -151,6 +154,7 @@
         <Panel>
           <h1 style={{ margin: "0 0 22px 0", color: "#FF992D" }}>{props.title}</h1>
           <p style={{ color: "#FFFFFF" }}>{props.text}</p>
+          <Button onClick={props.resetChoices}>Reset the Quiz and find another Avenger!</Button>
         </Panel>
       );
 
@@ -168,9 +172,13 @@
               </Question>
             );
           } else if (data.type === "answer") {
-            return <Answer title={data.title} text={data.text} />;
+            return <Answer
+              title={data.title}
+              text={data.text}
+              resetChoices={props.resetChoices}
+            ></Answer>;
           }
-          return;
+          return undefined;
         };
 
         const chosenNodes = getChosenNodes(props.marvelNodes, props.choices);
@@ -182,6 +190,14 @@
             alignItems: "center",
             padding: "10px"
           }}>
+            <Panel>
+              <Header style={{ fontSize: "1.5em", textAlign: "center" }}>
+                WHICH MARVEL-OUS HERO ARE YOU?
+              </Header>
+              <p style={{ margin: "2px", fontSize: "0.9em", color: "#3D2811" }}>
+                Originaly published in EW Magazine Apr. 27, 2018: Text by Shirley Li, edited by Katie Hasty.
+              </p>
+            </Panel>
             {chosenNodes.map(getPanel)}
           </div>
         );
@@ -190,11 +206,14 @@
 
       // ----------------------------------------------------------------------
       // State and state handling
+      const makeChoiceUpdater = (action) =>
+        (choice) => update("choices", action(choice));
 
       const state = {
         marvelNodes,
         choices: [],
         addChoice: makeChoiceUpdater((choice) => state.choices.concat(choice)),
+        resetChoices: () => update("choices", []),
         removeChoice: makeChoiceUpdater(() => state.choices.slice(0, -1))
       };
 
