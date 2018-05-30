@@ -99,19 +99,32 @@
         </h1>
       );
 
-      const Panel = (props) => (
-        <div style={merge({
-          boxSizing: "border-box",
-          width: "300px",
-          marginBottom: "10px",
-          padding: "24px 20px 14px 20px",
-          borderRadius: "6px",
-          color: "#FFFFFF",
-          backgroundColor: "#666666",
-        }, props.style)}>
-          {props.children}
-        </div>
-      );
+      class Panel extends React.Component {
+        constructor(props) {
+          super(props);
+          this.ref = React.createRef();
+        }
+
+        componentDidMount() {
+          this.ref.current.scrollIntoView({ behavior: "smooth" });
+        }
+
+        render() {
+          return (
+            <div ref={this.ref} style={merge({
+              boxSizing: "border-box",
+              width: "300px",
+              marginBottom: "10px",
+              padding: "24px 20px 14px 20px",
+              borderRadius: "6px",
+              color: "#FFFFFF",
+              backgroundColor: "#666666",
+            }, this.props.style)}>
+              {this.props.children}
+            </div>
+          );
+        }
+      }
 
       const Choice = (props) => (props.clickable ?
         <Button onClick={props.onClick}>{props.children}</Button>
