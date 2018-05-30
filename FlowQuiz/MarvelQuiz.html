@@ -93,7 +93,7 @@
       const Header = (props) => (
         <h1 style={merge({
           margin: "0 0 22px 0",
-          color: "#FF992D",
+          color: "#FFBE1B",
         }, props.style)}>
           {props.children}
         </h1>
@@ -140,14 +140,13 @@
 
       const Question = (props) => (
         <Panel>
-          <h1 style={{
-            margin: "0 0 22px 0",
+          <Header style={{
             fontSize: "1em",
             fontWeight: "300",
-            color: "#FFFFFF",
+            color: "#FFFFFF"
           }}>
             {props.children}
-          </h1>
+          </Header>
           <div style={{
             display: "flex",
             flexDirection: "column",
@@ -167,7 +166,7 @@
 
       const Answer = (props) => (
         <Panel>
-          <h1 style={{ margin: "0 0 22px 0", color: "#FF992D" }}>{props.title}</h1>
+          <Header>{props.title}</Header>
           <p style={{ color: "#FFFFFF" }}>{props.text}</p>
           <Button onClick={props.resetChoices}>Reset the Quiz and find another Avenger!</Button>
         </Panel>
@@ -206,8 +205,8 @@
             padding: "10px"
           }}>
             <Panel>
-              <Header style={{ fontSize: "1.5em", textAlign: "center" }}>
-                WHICH MARVEL-OUS HERO ARE YOU?
+              <Header>
+                Which Marvel-ous Hero Are You?
               </Header>
               <p style={{ margin: "2px", fontSize: "0.8em", color: "#3D2811" }}>
                 Originaly published in EW Magazine Apr. 27, 2018: Text by Shirley Li, edited by Katie Hasty.
