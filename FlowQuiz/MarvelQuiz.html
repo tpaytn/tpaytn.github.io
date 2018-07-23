@@ -37,24 +37,23 @@
 
       // ----------------------------------------------------------------------
       // Making choices in the flowquiz:
-      const getNextNode = (nodes, id, choice) => {
-        const n = nodes[id];
-        // failure: nextNode is falsy
-        return n.type === "question" && n.choices[choice].nextNode;
-      };
+      const getChosenNodes = (allNodes, choices) => {
 
-      const getChosenNodeIDs = (nodes, choices) => (
-        choices.reduce((IDlist, choice, index) => {
-          const nextNode = getNextNode(nodes, IDlist[index], choice);
+        const getNextNodeIndex = (currentId, choice) => {
+          const n = allNodes[currentId];
+          // failure: nextNode is falsy
+          return n.type === "question" && n.choices[choice].nextNode;
+        };
+
+        const choicesReducer = (IDlist, choice, currentId) => {
+          const nextNode = getNextNodeIndex(IDlist[currentId], choice);
           // protect against some invalid choices
           return !!nextNode ? IDlist.concat(nextNode) : IDlist;
-        }, [1])
-      );
+        };
 
-      const getChosenNodes = (nodes, choices) => {
-        const ids = getChosenNodeIDs(nodes, choices);
+        const ids = choices.reduce(choicesReducer, [1]);
         return ids.map((e, index) =>
-          merge(nodes[e], { choice: choices[index] })
+          merge(allNodes[e], { choice: choices[index] })
         );
       };
 
