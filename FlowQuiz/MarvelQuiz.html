@@ -32,7 +32,7 @@
     <script type="text/babel">
       // ----------------------------------------------------------------------
       // Helper functions
-      const merge = Object.assign.bind({});
+      const merge = (...a) => Object.assign({}, ...a);
 
 
       // ----------------------------------------------------------------------
@@ -45,8 +45,8 @@
           return n.type === "question" && n.choices[choice].nextNode;
         };
 
-        const choicesReducer = (IDlist, choice, currentId) => {
-          const nextNode = getNextNodeIndex(IDlist[currentId], choice);
+        const choicesReducer = (IDlist, choice, currentIndex) => {
+          const nextNode = getNextNodeIndex(IDlist[currentIndex], choice);
           // protect against some invalid choices
           return !!nextNode ? IDlist.concat(nextNode) : IDlist;
         };
