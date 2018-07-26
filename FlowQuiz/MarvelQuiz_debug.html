@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html style="overflow-y: scroll;">
+  <head>
+    <title>Marvel FlowQuiz</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0,
+                   maximum-scale=1.0,
+                   user-scalable=no" />
+    <meta name="HandheldFriendly"
+          content="true" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es7-shim/6.0.0/es7-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <script src="../libs/object-path-master/index.js"></script>
+    <script src="js/marvelNodes.js"></script>
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+      integrity="sha256-gvEnj2axkqIj4wbYhPjbWV7zttgpzBVEgHub9AAZQD4=" crossorigin="anonymous" /-->
+  </head>
+  <body id="react-app" style="
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 0.9rem;
+    background: #C18CFF;
+  ">
+    <script type="text/babel">
+      // ----------------------------------------------------------------------
+      // Helper functions
+      const merge = Object.assign.bind(undefined, {});
+
+      // ----------------------------------------------------------------------
+      // Making choices in the flowquiz:
+      const getChosenNodes = (allNodes, choices) => {
+
+        const getNextNodeIndex = (currentId, choice) => {
+          const n = allNodes[currentId];
+          // failure: nextNode is falsy
+          return n.type === "question" && n.choices[choice].nextNode;
+        };
+
+        const choicesReducer = (IDlist, choice, currentIndex) => {
+          const nextNode = getNextNodeIndex(IDlist[currentIndex], choice);
+          // protect against some invalid choices
+          return !!nextNode ? IDlist.concat(nextNode) : IDlist;
+        };
+
+        const ids = choices.reduce(choicesReducer, [1]);
+        return ids.map((e, index) =>
+          merge(allNodes[e], { choice: choices[index] })
+        );
+      };
+
+
+      // ----------------------------------------------------------------------
+      // Components
+      const Button = (props) => {
+        const bgColor = "#C0C0C0"
+        return (
+          <button
+            onClick={props.onClick}
+            disabled={props.disabled}
+            style={merge({
+              height: "40px",
+              marginBottom: "8px",
+              padding: "0 10px",
+              borderWidth: "4px",
+              borderStyle: "solid",
+              borderColor: bgColor,
+              borderRadius: "10px",
+              fontSize: "0.75em",
+              textAlign: "center",
+              color: "#000000",
+              backgroundColor: bgColor,
+            }, props.style)}
+          >
+            {props.children}
+          </button>
+        );
+      };
+
+      const Header = (props) => (
+        <h1 style={merge({
+          margin: "0 0 22px 0",
+          color: "#FFBE1B",
+        }, props.style)}>
+          {props.children}
+        </h1>
+      );
+
+      class Panel extends React.Component {
+        constructor(props) {
+          super(props);
+          this.ref = React.createRef();
+        }
+
+        componentDidMount() {
+          this.ref.current.scrollIntoView({ behavior: "smooth" });
+        }
+
+        render() {
+          return (
+            <div ref={this.ref} style={merge({
+              boxSizing: "border-box",
+              width: "300px",
+              marginBottom: "10px",
+              padding: "24px 20px 14px 20px",
+              borderRadius: "6px",
+              color: "#FFFFFF",
+              backgroundColor: "#666666",
+            }, this.props.style)}>
+              {this.props.children}
+            </div>
+          );
+        }
+      }
+
+      const Choice = (props) => (props.clickable ?
+        <Button onClick={props.onClick}>{props.children}</Button>
+        :
+        <Button disabled style={
+          (props.chosen) ?
+            { backgroundColor: "#D5F0F2", borderColor: "#00F0FF" }
+            : { color: "#DDDDDD" }
+        }>
+          {props.children}
+        </Button>
+      );
+
+      const Question = (props) => (
+        <Panel>
+          <Header style={{
+            fontSize: "1em",
+            fontWeight: "300",
+            color: "#FFFFFF"
+          }}>
+            {props.children}
+          </Header>
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+          }}>
+            {props.choices.map((e, index) =>
+              <Choice
+                clickable={props.choice === undefined}
+                chosen={props.choice === index}
+                onClick={() => props.addChoice(index)}
+              >
+                {e.text}
+              </Choice>
+            )}
+          </div>
+        </Panel>
+      );
+
+      const Answer = (props) => (
+        <Panel>
+          <Header>{props.title}</Header>
+          <p style={{ color: "#FFFFFF" }}>{props.text}</p>
+          <Button onClick={props.resetChoices}>Reset the Quiz and find another Avenger!</Button>
+        </Panel>
+      );
+
+      const makePanel = (props, addChoice, resetChoices) => {
+        if (props.type === "question") {
+          return (
+            <Question
+              choices={props.choices}
+              choice={props.choice}
+              addChoice={addChoice}
+            >
+              {props.text}
+            </Question>
+          );
+        } else if (props.type === "answer") {
+          return (
+            <Answer
+              title={props.title}
+              text={props.text}
+              resetChoices={resetChoices}
+            ></Answer>
+          );
+        }
+        return undefined;
+      };
+
+      const Main = (props) => {
+        const getPanelComponent = (data) => makePanel(data, props.addChoice, props.resetChoices);
+        const chosenNodes = getChosenNodes(props.marvelNodes, props.choices);
+
+        return (
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "10px"
+          }}>
+            <Panel>
+              <Header>
+                Which Marvel-ous Hero Are You?
+              </Header>
+              <p style={{ margin: "2px", fontSize: "0.8em", color: "#3D2811" }}>
+                Originaly published in EW Magazine Apr. 27, 2018: Text by Shirley Li, edited by Katie Hasty.
+              </p>
+            </Panel>
+            {chosenNodes.map(getPanelComponent)}
+          </div>
+        );
+      };
+
+
+      // ----------------------------------------------------------------------
+      // State and state handling
+      const makeChoiceUpdater = (action) =>
+        (choice) => update("choices", action(choice));
+
+      const state = {
+        marvelNodes,
+        choices: [],
+        addChoice: makeChoiceUpdater((choice) => state.choices.concat(choice)),
+        resetChoices: () => update("choices", []),
+        removeChoice: makeChoiceUpdater(() => state.choices.slice(0, -1))
+      };
+
+      // Impure function: state is mutated and outside of function scope
+      const update = (path, value) => {
+        objectPath.set(state, path, value);
+        renderMain();
+      }
+
+      const updateViewportWidth = () =>
+        update("viewportWidth", document.documentElement.clientWidth);
+
+      window.addEventListener("resize", updateViewportWidth)
+
+
+      // ----------------------------------------------------------------------
+      // Render the view
+      const renderMain = () => ReactDOM.render(
+        Main(state),
+        document.getElementById("react-app")
+      );
+
+      // Inital render:
+      renderMain();
+
+    </script>
+  </body>
+</html>
