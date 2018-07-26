@@ -106,7 +106,7 @@
 
         render() {
           return (
-            <div ref={this.ref} style={merge({
+            <div ref={this.ref} style={{
               boxSizing: "border-box",
               width: "300px",
               marginBottom: "10px",
@@ -114,7 +114,7 @@
               borderRadius: "6px",
               color: "#FFFFFF",
               backgroundColor: "#666666",
-            }, this.props.style)}>
+            }}>
               {this.props.children}
             </div>
           );
